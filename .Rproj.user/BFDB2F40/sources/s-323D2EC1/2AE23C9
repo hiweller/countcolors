@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1070462491",
+    "hash" : "0",
     "id" : "2AE23C9",
     "lastKnownWriteTime" : 1526678004,
     "last_content_update" : 1526678004,
     "path" : "~/Dropbox/Collaborations:help/batwingAnalysis/countcolors/tests/testthat.R",
     "project_path" : "tests/testthat.R",
     "properties" : {
+        "cursorPosition" : "4,0",
+        "scrollLine" : "0"
     },
     "relative_order" : 5,
     "source_on_save" : false,
