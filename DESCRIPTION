@@ -10,12 +10,9 @@ Description: Counts colors within color range(s) in images, and
     of the pixels in the images, and the proportion of the image 
     within the target color range with optional background masking.
     Users can specify multiple color ranges for masking.
-Imports: colordistance::loadImage, tools, graphics, png, jpeg
+Imports: colordistance, tools, graphics, png, jpeg
 Depends: R (>= 3.4.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Suggests: knitr,
-    rmarkdown
-VignetteBuilder: knitr
