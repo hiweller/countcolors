@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526678528442.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1070462491",
+    "id" : "2AE23C9",
+    "lastKnownWriteTime" : 1526678004,
+    "last_content_update" : 1526678004,
+    "path" : "~/Dropbox/Collaborations:help/batwingAnalysis/countcolors/tests/testthat.R",
+    "project_path" : "tests/testthat.R",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

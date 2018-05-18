@@ -1,0 +1,84 @@
+# Functions for visualizing pixel count output
+
+# plotArrayAsImage: plot a 3D array as an RGB image
+
+# rgb.array: a 3D RGB array with R, G, and B channels (3rd dimension) to be plotted in the plot window
+# as an actual image
+
+# main: optional graph title
+plotArrayAsImage <- function(rgb.array, main = "") {
+
+    # Make sure the array is 3-dimensional
+
+    # If there are more than 3 channels/slices in the 3rd dimension (i.e. an
+    # alpha channel as 4th), only use the first 3
+    if (length(dim(rgb.array)) != 3) {
+        stop("RGB_array must be an array of three dimensions (pixel rows,
+             pixel columns, and color channels)")
+    } else if (dim(rgb.array)[3] != 3) {
+      warning("Provided array has more than 3 channels; using only the
+                first 3 as R, G, and B channels")
+    }
+
+    # Change graphical parameters for image display
+    op <- par(mar = c(0, 0, 2, 0))
+    asp <- dim(rgb.array)[1] / dim(rgb.array)[2]
+
+    # Initialize empty plot window
+    plot(0:1, 0:1, type = "n", ann = F, axes = F, asp = asp)
+
+    # Use rasterImage to actually plot the image
+    graphics::rasterImage(rgb.array, 0, 0, 1, 1)
+    title(main)
+
+    # Return to original graph window settings
+    par(op)
+}
+
+
+
+# changePixelColor: change all pixels within a target range to a target (diagnostic) color and return
+# 3D array
+
+# pixel.array: an image, represented as a 3D RGB array, in which to change pixel colors
+
+# pixel.idx: an n x 2 matrix of coordinates specifying which pixels to change
+
+# target.color: color with which to replace specified pixels; can be either a string of a color R
+# knows about (see colors()) or an RGB triplet
+
+# plotting: logical. should output be plotted in the plot window?
+
+# return.img: logical. should RGB array with swapped colors be returned?  main: optional graph title
+changePixelColor <- function(pixel.array, pixel.idx, target.color = "green",
+                             plotting = TRUE, return.img = FALSE, main = "") {
+
+    # Make sure target color is or can be coerced to an RGB triplet
+    if (is.character(target.color)) {
+        target.color <- as.vector(col2rgb(target.color) / 255)
+    }
+
+    # Check that vector is of appropriate length and has a 0-1 (not 0-255) range
+    if (length(target.color) != 3) {
+        stop("'target.color' must be a numeric vector of length 3 with
+             values between 0 and 1 or one of the colors listed by colors()")
+    } else if (range(target.color)[2] > 1) {
+        target.color <- target.color / 255
+    }
+
+    # Change specified pixels to target color
+    for (i in 1:nrow(pixel.idx)) {
+        pixel.array[pixel.idx[i, 1], pixel.idx[i, 2], ] <- target.color
+    }
+
+    # Plot if plotting = TRUE
+    if (plotting) {
+        countcolor::plotArrayAsImage(pixel.array, title = main)
+    }
+
+    # Return image with changed pixel colors if return.img = TRUE
+    if (return.img) {
+        return(pixel.array)
+    }
+
+}

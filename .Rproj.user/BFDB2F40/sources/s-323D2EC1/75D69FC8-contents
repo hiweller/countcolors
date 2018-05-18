@@ -1,0 +1,101 @@
+# Find pixels in an image that fall inside of a color range
+
+# rectangularRange: find pixels within a target range defined by boundaries in
+# each channel
+
+# Essentially draws a 'box' around a region of color space to search
+
+rectangularRange <- function(pixel.array, upper, lower,
+                             target.color = "green", main = "",
+                             color.pixels = TRUE, plotting = TRUE) {
+
+  # Find all pixels within target range + get their locations
+  idx <- which( (lower[1] <= pixel.array[, , 1] &
+                  pixel.array[, , 1] <= upper[1]) &
+                 (lower[2] <= pixel.array[, , 2] &
+                    pixel.array[, , 2] <= upper[2]) &
+                 (lower[3] <= pixel.array[, , 3] &
+                    pixel.array[, , 3] <= upper[3]),
+               arr.ind = TRUE)
+
+  # Create list to return, including index of pixels within range, number of
+  # pixels in range, fraction of image in range, and original image
+  return.list <- list(pixel.idx = idx,
+                      pixel.count = nrow(idx),
+                      img.fraction = nrow(idx) / (nrow(pixel.array) * ncol(pixel.array)),
+                      original.img = pixel.array)
+
+  # If color.pixels is TRUE, create a version of the image with the pixels
+  # changed to a diagnostic color and add indicator image onto returned list
+  if (color.pixels | plotting) {
+    indicator.img <- changePixelColor(pixel.array = pixel.array,
+                                      pixel.idx = idx, target.color = target.color,
+                                      plotting = FALSE, return.img = TRUE)
+    return.list$indicator.img <- indicator.img
+
+    # If plotting = TRUE, plot indicator.img in the plot window
+    if (plotting) {
+      countcolors::plotArrayAsImage(indicator.img, main = main)
+    }
+
+  }
+
+  return(return.list)
+
+}
+
+
+
+# sphericalRange: find pixels within a given radius of a specified point
+
+# Draws a sphere around a region of color space to search
+sphericalRange <- function(pixel.array, center, radius,
+                           target.color = "green", main = "",
+                           color.pixels = TRUE, plotting = TRUE) {
+
+  # Assuming RGB, change radius percent to fraction of maximum distance in RGB
+  # space
+  radius <- radius*sqrt(sum((rep(0, 3) - rep(1, 3))^2))
+
+  pixel.distances <- matrix(NA, nrow = dim(pixel.array)[1], ncol=dim(pixel.array)[2])
+
+  # For every pixel, calculate distance from center
+  for (i in 1:dim(pixel.array)[1]) {
+    for (j in 1:dim(pixel.array)[2]) {
+      pixel.distances[i, j] <- sqrt(sum((pixel.array[i, j, ] - center)^2))
+    }
+  }
+
+  # Index every pixel with distance <= radius
+  idx <- which(pixel.distances <= radius, arr.ind = TRUE)
+
+  # Provide warning if no pixels were indexed at all
+  if (nrow(idx) == 0) {
+    warning("No pixels within color range in provided image")
+  }
+
+  # Create list to return, including index of pixels within range, number of
+  # pixels in range, fraction of image in range, and original image
+  return.list <- list(pixel.idx = idx,
+                      pixel.count = nrow(idx),
+                      img.fraction = nrow(idx)/(nrow(pixel.array) * ncol(pixel.array)),
+                      original.img = pixel.array)
+
+  # If color.pixels is TRUE, create a version of the image with the pixels
+  # changed to a diagnostic color and add indicator image onto returned list
+  if (color.pixels | plotting) {
+    indicator.img <- changePixelColor(pixel.array = pixel.array,
+                                      pixel.idx = idx, target.color = target.color,
+                                      plotting = FALSE, return.img = TRUE)
+    return.list$indicator.img <- indicator.img
+
+    # If plotting = TRUE, plot indicator.img in the plot window
+    if (plotting) {
+      plotArrayAsImage(indicator.img)
+    }
+
+  }
+
+  return(return.list)
+
+}

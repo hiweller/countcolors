@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526566405296.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "85|50|311|0|\n349|62|386|0|\n",
+    "hash" : "0",
+    "id" : "90AB048C",
+    "lastKnownWriteTime" : 1526675600,
+    "last_content_update" : 1526675906140,
+    "path" : "~/Dropbox/Collaborations:help/batwingAnalysis/countcolors/R/count_colors_in_images.R",
+    "project_path" : "R/count_colors_in_images.R",
+    "properties" : {
+        "cursorPosition" : "343,42",
+        "scrollLine" : "329",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
