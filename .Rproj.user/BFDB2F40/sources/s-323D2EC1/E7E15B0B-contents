@@ -2,19 +2,16 @@ colordistance::plotPixels("~/Dropbox/Westneat_Lab/colordistance/Examples/Benchma
 
 colordistance::plotPixels("~/Dropbox/Westneat_Lab/colordistance/Examples/Benchmark/RGB16Million_BruceLindbloom.png", n=30000, rev=TRUE)
 
-pixel.array <- png::readPNG("~/Dropbox/Westneat_Lab/colordistance/Examples/Benchmark/RGB16Million_BruceLindbloom.png")
+pixel.array <- colordistance::loadImage("~/Dropbox/Westneat_Lab/colordistance/Examples/Benchmark/RGB16Million_BruceLindbloom.png", lower = NULL)
 
 lower <- c(0, 0, 0.8)
 upper <- c(0.2, 0.2, 1)
 
-rect <- countcolors::rectangularRange(pixel.array, lower = lower, upper = upper, plotting =  FALSE, color.pixels = F)
+reds <- seq(0, 0.2, length.out = 500)
+greens <- seq(0, 0.2, length.out = 500)
+blues <- seq(0.8, 1, length.out = 500)
 
-idx <- which( (lower[1] <= pixel.array[, , 1] &
-                 pixel.array[, , 1] <= upper[1]) &
-                (lower[2] <= pixel.array[, , 2] &
-                   pixel.array[, , 2] <= upper[2]) &
-                (lower[3] <= pixel.array[, , 3] &
-                   pixel.array[, , 3] <= upper[3]),
-              arr.ind = F)
+expand.grid(reds, greens, blues)
 
-rect.pixels <- pixel.array[idx]
+
+

@@ -9,6 +9,14 @@ An R package that counts colors within color range(s) in images, and
     within the target color range with optional background masking.
     Users can specify multiple color ranges for masking.
 
-## Questions?
+## Planned edits before CRAN release
+
+* Testing
+* 1D indexing in range functions
+* Explanatory vignette
+* Rcpp for speed?
+
+
+## Questions or feedback?
 
 Email me: <hannahiweller@gmail.com>
