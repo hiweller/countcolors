@@ -29,10 +29,10 @@
 #'
 #' @return A list with the following elements:
 #' \itemize{
-#'   \item \code{pixel.idx} Coordinates of pixels within color range.
-#'   \item \code{img.fraction} Proportion of the image within color range.
-#'   \item \code{original.img} The original RGB array.
-#'   \item \code{indicator.img} If \code{color.pixels = TRUE}, RGB array with
+#'   \item \code{pixel.idx}: Coordinates of pixels within color range.
+#'   \item \code{img.fraction}: Proportion of the image within color range.
+#'   \item \code{original.img}: The original RGB array.
+#'   \item \code{indicator.img}: If \code{color.pixels = TRUE}, RGB array with
 #'   color-swapped pixels.
 #' }
 #'
@@ -126,10 +126,10 @@ rectangularRange <- function(pixel.array, upper, lower,
 #'
 #' @return A list with the following elements:
 #' \itemize{
-#'   \item \code{pixel.idx} Coordinates of pixels within color range.
-#'   \item \code{img.fraction} Proportion of the image within color range.
-#'   \item \code{original.img} The original RGB array.
-#'   \item \code{indicator.img} If \code{color.pixels = TRUE}, RGB array with
+#'   \item \code{pixel.idx}: Coordinates of pixels within color range.
+#'   \item \code{img.fraction}: Proportion of the image within color range.
+#'   \item \code{original.img}: The original RGB array.
+#'   \item \code{indicator.img}: If \code{color.pixels = TRUE}, RGB array with
 #'   color-swapped pixels.
 #' }
 #'
