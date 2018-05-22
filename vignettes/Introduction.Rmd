@@ -30,9 +30,11 @@ To search for pixels of a certain color, `countcolors` draws a set of boundaries
 
 ## Rectangular ranges
 If we wanted to define ranges for magenta pixels, we would look for pixels near the RGB value of [1, 0, 1]. To expand this range a little, we could define the following conditions:
-- Red: 0.7 to 1.0
-- Green: 0 to 0.3
-- Blue: 0.7 to 1.0
+
+* Red: 0.7 to 1.0
+* Green: 0 to 0.3
+* Blue: 0.7 to 1.0
+
 Then we search for pixels whose colors satisfy all three conditions. In `countcolors`, you do this by specifying a lower and an upper set of RGB triplets:
 ```{r, echo=FALSE, fig.align='center'}
 lower <- c(0.7, 0.01, 0.7)
@@ -180,7 +182,7 @@ countcolors::changePixelColor(norway, norway.spherical$pixel.idx, target.color="
 
 ```
 
-We got a lot of the visible green, but we're clearly missing an awful lot here. One option is to nudge the center color around a lot, but first we'll try increasing the radius. We'll also set `plotting = TRUE` in the `sphericalRange` function, which calls on `changePixelColor` to generate the masked image:
+We got most of the visible green, but we're clearly missing an awful lot here. One option is to nudge the center color around, but first we'll try increasing the radius. We'll also set `plotting = TRUE` in the `sphericalRange` function, which calls on `changePixelColor` to generate the masked image:
 
 ```{r, fig.align='center'}
 
@@ -195,12 +197,11 @@ norway.spherical <- countcolors::sphericalRange(norway,
 That's more like it! It looks like the green is masked out by magenta, but not the ocean, the clouds, or the mountaintops. Of course, the 15% radius was arrived at cooking-show style after I tested a few different radii that were too high or too low, and most images will require some experimentation.
 
 Using a rectangular range is a very similar procedure:
-
-```{r, fig.width=4, fig.align='center'}
+```{r, fig.align='center'}
 # Trying with our original color ranges
 norway.rectangular <- countcolors::rectangularRange(norway, 
                       upper = upper.rectangular, lower = lower.rectangular, 
-                      target.color = "yellow", main="Definitely too narrow")
+                      target.color = "yellow")
 
 # Trying with our cooking show values
 norway.rectangular <- countcolors::rectangularRange(norway, 
@@ -214,13 +215,14 @@ The rectangular range gave us an area of 25.9%, while the spherical one was 26%;
 ## Using countColors
 
 `countColors` calls on the above functions, but it also allows you to:
+
 * Save the masked images instead of printing them to the plot window (faster), 
 * Ignore certain colors, such as if you masked out the background;
 * Screen out multiple different colors
 
 For example, if we also wanted to count the amount of white in the image, we could include both the green center and white center, specifying a radius for each:
 
-```{r}
+```{r, fig.align='center'}
 # Using multiple colors
 green.center <- c(0.24, 0.45, 0.24)
 white.center <- c(1, 1, 1)
@@ -236,9 +238,9 @@ two.colors$pixel.fraction
 
 ```
 
-Or let's say we wanted to ignore the ocean, and just find the percentage of green on the land. This would require specifying a color (dark blue) to ignore when finding the image fraction. 
+Or let's say we wanted to ignore the ocean, and just find the percentage of green on the land. This would require specifying a color (dark blue) to ignore when finding the image fraction. (Try masking out the ocean using these background parameters as upper and lower ranges to see convince yourself these are good values.) 
 
-```{r}
+```{r, fig.align='center'}
 # Using multiple colors
 green.center <- c(0.24, 0.45, 0.24)
 bg.upper <- c(0.2, 0.2, 0.45)
@@ -257,4 +259,5 @@ bg.ignore$pixel.fraction
 
 If you have many images to analyze, the `countColorsInDirectory` function may be useful. It's a wrapper for `countColors` that first searches for any JPEG or PNG images in a provided directory, and then applies the same parameters to each one. It returns a list of `countColors` lists.
 
-
+## Questions or feedback?
+Email me: <hannahiweller@gmail.com>

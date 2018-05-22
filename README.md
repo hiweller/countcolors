@@ -12,8 +12,8 @@ An R package that counts colors within color range(s) in images, and
 ## Planned edits before CRAN release
 
 * Testing
-* 1D indexing in range functions
-* Explanatory vignette
+* ~~1D indexing in range functions~~
+* ~~Explanatory vignette~~
 * Rcpp for speed?
 
 ## Installation instructions
