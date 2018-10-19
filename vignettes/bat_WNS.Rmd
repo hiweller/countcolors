@@ -1,0 +1,92 @@
+---
+title: "Example Quantification of WNS lesions on bat wings"
+author: "Sarah Hooper"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Bat wing WNS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The countcolor package was initially designed for calculating the percentage of bat-wing membrane infected by Pseudogymnoascus destructans, the causative agent of White-nose Syndrome.  The following example is designed to illustrate this process.
+
+# Acquiring and prepping images
+
+*Pseudogymnoascus destructans* is a psychrophilic fungus that can infect bats during hibernation.  By transilluminating with long-wave ultraviolet (UV) light (366-385 nm), the fungus emits a distinct orange-yellow fluorescence that corresponds directly with the fungal cupping erosions.
+
+```{r, echo=FALSE, fig.width=7, fig.height=4, fig.cap = "Figure 1"}
+library(countcolors)
+original.img <- system.file("extdata", "bat_wing.png", package ="countcolors")
+pixel.array <- colordistance::loadImage(original.img)
+countcolors::plotArrayAsImage(pixel.array$original.rgb)
+```
+
+The image above was taken by briefly holding a bat over a long-wave UV light that emits the 366-385 nm wavelengths known to incite the characteristic orange—yellow fluorescence.  The countcolors package will be able to calculate the area of the wing affected with this fluorescence once the background is masked.  To do this we need to make sure that only the wing membrane is visible and the background is a single, uniform color, that is as dissimilar to the wing-membrane and orange—yellow fluorescence as possible.  This background color will be ignored by countcolors and so only the area of the wing membrane will be used in the calculations.
+
+We used Photoshop 2018 to select the wing membrane, however you can use any image editing software that allows you to create a single, uniform background color.  Additionally, we never manipulated any original photos, so create a copy of each image you want to alter and work only with the copy.
+
+Because GIMP is an openware software and freely accessible, we have provided directions for isolating the wing in the above photograph.  Open the copy of our above bat wing photo using [GIMP](http://www.gimp.org). From the tool bar, select `Layer` $\rightarrow$ `Transparency` $\rightarrow$ `Add alpha channel`.
+
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap = "Figure 2"}
+library(countcolors)
+original.img <- system.file("extdata", "photoshop.png", package ="countcolors")
+pixel.array <- colordistance::loadImage(original.img)
+countcolors::plotArrayAsImage(pixel.array$original.rgb)
+```
+
+Next choose the lasso tool (Blue arrow in Figure 2).  Click around the wing perimeter to highlight the wing in a solid gray line.  Close the selecting by clicking on the solid gray circle that serves as the starting point for the selection.  Double click the center of the wing and the solid border around the wing should turn to a moving dotted line.  On the toolbar go to `Select` $\rightarrow$ `Invert` then press the delete button to eliminate the background.
+
+Choose `File` $\rightarrow$ `Export` and save as a JPEG or PNG file.  Your result should be similar to Figure 3.
+
+```{r, echo=FALSE, fig.width=7, fig.height=5, fig.cap = "Figure 3"}
+library(countcolors)
+original.img <- system.file("extdata", "white_bg.png", package ="countcolors")
+pixel.array <- colordistance::loadImage(original.img)
+countcolors::plotArrayAsImage(pixel.array$original.rgb)
+```
+
+You are now ready to use R or R studio to complete the analysis.
+
+# Using countcolors to determine the percentage of *P. destructans* fluorescence:
+
+Loading the wing image into R Studio. In the following code, any line preceded by a `#` is a comment included to annotate the code, and is not actually evaluated by R.
+
+```{r, fig.width = 7}
+# Load required package:
+library(countcolors)
+
+# Define lower and upper limit for color range using RGB pixel coordinates
+# Typical RGB values range between 0 and 255, but R scales them to range between
+# 0 and 1, where 1 is maximum brightness
+lower.rectangular <- c(0.223, 0.222, 0.210)
+upper.rectangular <- c(0.411, 0.486, 0.501)
+
+# Define background color that will be excluded (in our case white)
+bg.upper <- c(1, 1, 1)
+bg.lower <- c(0.8, 0.8, 0.8)
+
+# Define path to background-masked image
+# Typically, this will take the format of "[path/to/directory]/image_name.jpeg"
+# Here, we're using an image that is included in the package, accessed through
+# the system.file function
+image.name <- system.file("extdata", "white_bg.png", package = "countcolors")
+
+# Find pixels using rectangular range and replace those pixels with another color
+# Magenta is used in this example
+wingfraction <- countColors(image.name, color.range = "rectangular", 
+                            upper = upper.rectangular, lower = lower.rectangular,
+                            bg.upper = bg.upper, bg.lower = bg.lower,
+                            target.color = "magenta",
+                            plot = TRUE)
+
+
+
+```
