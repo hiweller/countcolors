@@ -55,7 +55,7 @@ countcolors::plotArrayAsImage(pixel.array$original.rgb)
 
 You are now ready to use R or R studio to complete the analysis.
 
-# Using countcolors to determine the percentage of *P. destructans* fluorescence:
+# Determining the percentage of *P. destructans* fluorescence
 
 Loading the wing image into R Studio. In the following code, any line preceded by a `#` is a comment included to annotate the code, and is not actually evaluated by R.
 
