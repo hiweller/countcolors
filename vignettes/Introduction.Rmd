@@ -2,11 +2,11 @@
 title: "Introduction to countcolors package"
 author: "Hannah Weller"
 date: "`r Sys.Date()`"
-output: 
-  rmarkdown::html_document:
-    fig_width: 6
-    fig_height: 6
-    fig_caption: true
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Bat wing WNS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 # What does this package do?
@@ -18,6 +18,7 @@ The `countcolors` package finds pixels by color range in an image. It started as
 `countcolors` deals primarily with RGB color space. You're probably familiar with the fact that digital images are stored with three color layers: red, green, and blue. We can think of these like the dimensions of a three-dimensional color space<sup>[1](#colorspace)</sup>, where a color is defined by its red, green, and blue coordinates. Each of these axes ranges from 0 to 255 (or 0 to 1, if we're dealing with unit vectors). So pure red, for example, would have a red value of 1, a green value of 0, and a blue value of 0. Magenta, which is an equal mix of red and blue, would have an RGB triplet of [1, 0, 1].
 
 ```{r, echo=FALSE, fig.width=4, fig.height=4}
+require(scatterplot3d)
 load("brucelindbloom_100Ksample.Rdat")
 
 scatterplot3d::scatterplot3d(rgb.pixels, color=rgb(rgb.pixels), pch = 20,
@@ -37,6 +38,8 @@ If we wanted to define ranges for magenta pixels, we would look for pixels near 
 
 Then we search for pixels whose colors satisfy all three conditions. In `countcolors`, you do this by specifying a lower and an upper set of RGB triplets:
 ```{r, echo=FALSE, fig.align='center'}
+require(scatterplot3d)
+
 lower <- c(0.7, 0.01, 0.7)
 upper <- c(0.99, 0.3, 0.99)
 
@@ -62,6 +65,8 @@ This is why it's referred to as a 'rectangular' range -- it draws a box around a
 Sometimes, rather than boundaries, you want to specify a particular color and a search radius around that color. `countcolors` uses this to draw a sphere in color space centered around a single color, whose size depends on the radius. Say we're looking at a mossy green color, with an RGB triplet of [0.4, 0.7, 0.4]. If we set the radius very small -- say, 5% of maximum color distance -- we only get a few pixels back:
 
 ```{r, echo=FALSE, fig.align='center'}
+require(scatterplot3d)
+
 center <- c(0.4, 0.7, 0.4)
 radius <- 0.05
 distances <- vector(length = nrow(rgb.pixels))
@@ -82,6 +87,8 @@ scatterplot3d::scatterplot3d(rgb.pixels[idx, ],
 But if we increase that radius to 25%, we get a much bigger search space and many more pixels back:
 
 ```{r, echo=FALSE, fig.align='center'}
+require(scatterplot3d)
+
 radius <- 0.25
 
 idx <- which(distances <= radius)
@@ -101,7 +108,7 @@ All `countcolors` does is search for pixels within a color range specified by th
 
 To see how this works in practice, let's look at an aerial photograph of Norway from NASA:
 ```{r, echo=FALSE, fig.width=4, fig.height=4.5, fig.align="center"}
-
+require(scatterplot3d)
 img <- jpeg::readJPEG("norway.jpg")
 countcolors::plotArrayAsImage(img)
 

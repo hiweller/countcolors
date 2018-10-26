@@ -58,6 +58,7 @@ A list of \code{\link{countColors}} lists, one for each image.
 A wrapper for \code{\link{countColors}} that finds every image (JPEG or PNG) in a #' folder and counts colors in each image.
 }
 \examples{
+\dontrun{
 folder <- system.file("extdata", package = "countcolors")
 
 # Screen out white in both the flower image and the pelican image
@@ -67,7 +68,7 @@ lower <- c(0.8, 0.8, 0.8)
 white.screen <- countcolors::countColorsInDirectory(folder, color.range =
 "rectangular", upper = upper, lower = lower, bg.lower = NULL, plotting =
 TRUE, target.color = "turquoise")
-
+}
 }
 \seealso{
 \code{\link{countColors}}

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The countcolor package was initially designed for calculating the percentage of bat-wing membrane infected by Pseudogymnoascus destructans, the causative agent of White-nose Syndrome.  The following example is designed to illustrate this process.
+The countcolor package was initially designed for calculating the percentage of bat-wing membrane infected by *Pseudogymnoascus destructans*, the causative agent of White-nose Syndrome.  The following example is designed to illustrate this process.
 
 # Acquiring and prepping images
 

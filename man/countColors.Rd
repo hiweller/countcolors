@@ -4,8 +4,8 @@
 \alias{countColors}
 \title{Count the number of pixels within a color range or ranges}
 \usage{
-countColors(path, color.range = "spherical", center, radius, lower, upper,
-  bg.lower = rep(0.8, 3), bg.upper = rep(1, 3),
+countColors(path, color.range = "spherical", center, radius, lower,
+  upper, bg.lower = rep(0.8, 3), bg.upper = rep(1, 3),
   target.color = c("magenta", "cyan", "yellow"), plotting = FALSE,
   save.indicator = FALSE, dpi = 72, return.indicator = FALSE)
 }

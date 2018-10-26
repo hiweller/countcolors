@@ -330,6 +330,7 @@ countColors <- function(path, color.range = "spherical",
 #' @seealso \code{\link{countColors}}
 #'
 #' @examples
+#' \dontrun{
 #' folder <- system.file("extdata", package = "countcolors")
 #'
 #' # Screen out white in both the flower image and the pelican image
@@ -339,7 +340,7 @@ countColors <- function(path, color.range = "spherical",
 #' white.screen <- countcolors::countColorsInDirectory(folder, color.range =
 #' "rectangular", upper = upper, lower = lower, bg.lower = NULL, plotting =
 #' TRUE, target.color = "turquoise")
-#'
+#'}
 #' @export
 countColorsInDirectory <- function(folder,
                                    color.range = "spherical",

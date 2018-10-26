@@ -85,12 +85,14 @@ plotArrayAsImage <- function(rgb.array, main = "") {
 #'
 #' countcolors::changePixelColor(flowers, sinister.object, target.color = "black")
 #'
+#'\dontrun{
 #' # Change all the white flowers to magenta
 #' indicator.img <- countcolors::sphericalRange(flowers, center = c(1, 1, 1),
 #' radius = 0.1, color.pixels = TRUE, plotting = FALSE)
 #'
 #' countcolors::changePixelColor(flowers, indicator.img$pixel.idx,
 #' target.color="magenta")
+#' }
 #' @export
 changePixelColor <- function(pixel.array, pixel.idx, target.color = "green",
                              return.img = FALSE, plotting = TRUE, main = "") {
