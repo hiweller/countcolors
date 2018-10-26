@@ -48,11 +48,11 @@ targeted pixels changed to indicator color) be returned?}
 \value{
 A list with the following attributes:
 \itemize{
-  \item \code{pixel.idx} Unique coordinates of pixels within color range(s).
-  \item \code{pixel.fraction} Proportion of the non-background image within
+  \item \code{pixel.idx}: Unique coordinates of pixels within color range(s).
+  \item \code{pixel.fraction}: Proportion of the non-background image within
   color range(s), found by dividing the number of pixels in \code{pixel.idx}
   by the number of non-background pixels in the image.
-  \item \code{indicator.img} If \code{return.indicator = TRUE}, RGB array with
+  \item \code{indicator.img}: If \code{return.indicator = TRUE}, RGB array with
   color-swapped pixels.
 }
 }
@@ -66,7 +66,7 @@ is colored using a different indicator color.
 More than one set of ranges can be specified for the color search
   space, but the same number of arguments must be provided in each case (so
   the number of pixels and centers must be the same if using a spherical
-  range, and the number of upper and lower bounds must be the same is using a
+  range, and the number of upper and lower bounds must be the same if using a
   rectangular one).
 
 For \code{center}, \code{upper}, and \code{lower}, which call for RGB
