@@ -3,4 +3,10 @@
 * ubuntu 14.04 (on travis-ci), R 3.5.1
 
 ## R CMD check results
-There were no ERRORs, WARNINGs, or NOTEs.
+There were no ERRORs, WARNINGs.
+
+There was one NOTE:
+
+	New submission
+
+First submission of package; this note is required.
