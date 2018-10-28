@@ -19,8 +19,8 @@ The `countcolors` package finds pixels by color range in an image. It started as
 
 ```{r, echo=FALSE, fig.width=4, fig.height=4}
 require(scatterplot3d)
-load("brucelindbloom_100Ksample.Rdat")
 
+rgb.pixels <- cbind(runif(100000), runif(100000), runif(100000))
 scatterplot3d::scatterplot3d(rgb.pixels, color=rgb(rgb.pixels), pch = 20,
                              xlab="Red", ylab="Green", zlab="Blue")
 scatterplot3d::scatterplot3d(rgb.pixels, color=rgb(rgb.pixels), pch = 20,
