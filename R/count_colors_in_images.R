@@ -157,6 +157,52 @@ countColors <- function(path, color.range = "spherical",
                     " +/- ", radius[i] * 100, "%", sep = ""))
     }
 
+    # Convert target.color to hex codes for indicator image
+    # If target.color is color names, convert to RGB matrix
+    if (is.character(target.color)) {
+      # convert color names to RGB triplets
+      target.color <- col2rgb(target.color) / 255
+      # convert RGB triplets to hex codes
+      names(target.color) <- NULL
+      # If vector or matrix, convert to/check for 3-column matrix
+    } else if (is.numeric(target.color)) {
+      # If a vector, convert to a matrix
+      if (is.vector(target.color)) {
+        if (length(target.color) %% 3 == 0) {
+          target.color <- matrix(target.color, ncol = 3, byrow = TRUE)
+        } else {
+          stop(paste("Target.color must be a vector of color names",
+               "a vector of RGB triplets (multiple of 3)",
+               "or a matrix with target.colors as rows",
+               sep = ", "))
+          # If already a matrix, check that it has 3 columns
+        }
+      } else if (is.matrix(target.color)) {
+        if (ncol(target.color) != 3) {
+          stop("target.colors matrix must have 3 columns, 1 per channel")
+        }
+      }
+    }
+
+    # Convert to hex colors
+    target.color <- apply(target.color, 1,
+                          function(i) rgb(i[1], i[2], i[3]))
+    names(target.color) <- NULL
+
+    # Perform similar check for center colors
+    if (is.numeric(center)) {
+      if (length(center) %% 3 == 0) {
+        center <- matrix(center, ncol = 3, byrow = TRUE)
+      } else {
+        stop("Center must be a vector with length a multiple of 3 or a matrix
+             of centers")
+      }
+      } else if (is.matrix(center)) {
+        if (ncol(center) != 3) {
+          stop("Centers matrix must have 3 columns, 1 per channel")
+        }
+    }
+
     # Make sure there are enough colors to use for color indexing; if not, just
     # repeat color vector
     if (length(target.color) < nrow(center)) {
