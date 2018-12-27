@@ -30,10 +30,10 @@
 #'
 #' @param plotting Logical. Should output be plotted in the plot window?
 #'
-#' @param save.indicator Logical OR path for saving indicator image. If TRUE,
+#' @param save.indicator Logical. If TRUE,
 #'   saves image to the same directory as the original image as
 #'   'originalimagename_masked.png'; if a path is provided, saves it to that
-#'   directory/name instead.
+#'   directory/name instead, also as a PNG.
 #'
 #' @param dpi Resolution (dots per image) for saving indicator image.
 #'
@@ -88,6 +88,24 @@ countColors <- function(path, color.range = "spherical",
   # Takes a path to an image and loads it
   img <- colordistance::loadImage(path, lower = bg.lower, upper = bg.upper)
   original <- img$original.rgb
+
+  # If saving is on but no path was specified, set it to same directory as
+  # original image
+  if (isTRUE(save.indicator)) {
+    destination <- paste(tools::file_path_sans_ext(path),
+                         "_masked.png", sep = "")
+  } else if (is.character(save.indicator)) {
+    # If save.indicator is a filepath, save as a png and set save.indicator to a
+    # logical value
+    if (dir.exists(save.indicator)) {
+      destination <- paste(save.indicator, tools::file_path_sans_ext(path),
+                           ".png", sep = "")
+    } else {
+      destination <- paste(tools::file_path_sans_ext(save.indicator),
+                           ".png", sep = "")
+    }
+    save.indicator <- TRUE
+  }
 
   # If any output that requires colored indicator image is flagged, set
   # get.indicator to TRUE
@@ -276,20 +294,6 @@ countColors <- function(path, color.range = "spherical",
   # Plot if indicated
   if (plotting) {
     countcolors::plotArrayAsImage(indicator.img)
-  }
-
-  # If saving is on but no path was specified, set it to same directory as
-  # original image
-  if (isTRUE(save.indicator)) {
-    destination <- paste(tools::file_path_sans_ext(path),
-                         "_masked.png", sep = "")
-  } else if (is.character(save.indicator)) {
-    if (dir.exists(save.indicator)) {
-      destination <- paste(save.indicator, tools::file_path_sans_ext(path),
-                           "_masked.png", sep = "")
-    } else {
-      destination <- save.indicator
-    }
   }
 
   # If destination specified (save.indicator was either TRUE or a path), save a
