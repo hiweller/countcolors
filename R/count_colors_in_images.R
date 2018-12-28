@@ -139,7 +139,7 @@ countColors <- function(path, color.range = "spherical",
 
     # Convert to hex colors
     target.color <- apply(target.color, 1,
-                          function(i) grDevices::rgb(i[1], i[2], i[3]))
+                    function(i) grDevices::rgb(i[1], i[2], i[3]))
   } else {
     get.indicator <- FALSE
   }
