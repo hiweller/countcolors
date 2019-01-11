@@ -10,7 +10,7 @@ An R package that counts colors within color range(s) in images, and
     within the target color range with optional background masking.
     Users can specify multiple color ranges for masking.
 
-For more information, read the [introduction](https://cran.r-project.org/web/packages/countcolors/vignettes/Introduction.html) on CRAN.
+For more information, read the [introduction](https://cran.r-project.org/package=countcolors/vignettes/Introduction.html) on CRAN.
 
 ## About countcolors
 
