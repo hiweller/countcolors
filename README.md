@@ -1,4 +1,4 @@
-**Version**: 0.9.1
+**Version**: 0.9.1  
 **Author**: Hannah Weller  
 **Email**: hannahiweller@gmail.com  
 **GitHub**: https://github.com/hiweller  
