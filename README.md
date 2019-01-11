@@ -1,3 +1,4 @@
+**Version**: 0.9.1
 **Author**: Hannah Weller  
 **Email**: hannahiweller@gmail.com  
 **GitHub**: https://github.com/hiweller  
@@ -35,11 +36,11 @@ image of some treetops, it can quantify the amount of green tree cover,
 but it wouldn't necessarily be able to distinguish a species with leaves
 of one slightly different shade of green from all the others due to
 variations in lighting (among other sources of variation). If this is
-the kind of specificity you need, you're better off just mucking in 
+the kind of specificity you need, you're better off just mucking in
 and using real image processing. I recommend the [OpenCV
 library](https://opencv.org/) for C++ or Python.
 
-**December 27, 2018**: Fixed bugs in `countColors` that threw errors when 
+**December 27, 2018**: Fixed bugs in `countColors` that threw errors when
 specifying filepaths for `save.indicator` or providing numeric values for
 `target.color`. Thanks to Lee Yuhui for discovering them.
 

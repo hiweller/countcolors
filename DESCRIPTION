@@ -1,7 +1,7 @@
 Package: countcolors
 Type: Package
 Title: Locates and Counts Pixels Within Color Range(s) in Images
-Version: 0.9.0
+Version: 0.9.1
 Authors@R: person("Hannah", "Weller", email = "hannahiweller@gmail.com", role = c("aut", "cre"))
 Maintainer: Hannah Weller <hannahiweller@gmail.com>
 Description: Counts colors within color range(s) in images, and
