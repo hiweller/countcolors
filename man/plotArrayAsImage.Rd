@@ -14,7 +14,7 @@ image.}
 \item{main}{Optional title to display for image.}
 }
 \description{
-Plots a 3D array as an RGB image in the plot window.
+Plots a 3D array as an sRGB image in the plot window.
 }
 \examples{
 # Read in image

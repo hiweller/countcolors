@@ -48,7 +48,7 @@ a region of color space in which to search for pixels.
 in the order R-G-B. For example, the upper bounds for white would be c(1, 1,
 1), and the lower bounds might be c(0.8, 0.8, 0.8). This would search for all
 pixels where the red value, blue value, AND green value are all between 0.8
-and 1.
+and 1. All RGB values are interpreted to be in sRGB color space (not Adobe).
 }
 \examples{
 # Target color: change all of the red flowers to turquoise

@@ -23,28 +23,29 @@ details.}
 \code{center} to search. The same number of centers and radii must be
 specified.}
 
-\item{lower}{RGB triplet(s) specifying the bounds of color space
-to search. Must be the same length. See details.}
+\item{lower}{RGB triplet(s) specifying the bounds of color space to
+search. RGB range 0-1 (not 0-255). Must be the same length. See details.}
 
-\item{upper}{RGB triplet(s) specifying the bounds of color space
-to search. Must be the same length. See details.}
+\item{upper}{RGB triplet(s) specifying the bounds of color space to
+search. RGB range 0-1 (not 0-255). Must be the same length. See details.}
 
 \item{bg.lower}{RGB triplets specifying the bounds of color space to
-ignore as background, or \code{NULL} to use the entire image.}
+ignore as background, or \code{NULL} to use the entire image. RGB range 0-1
+(not 0-255).}
 
 \item{bg.upper}{RGB triplets specifying the bounds of color space to
-ignore as background, or \code{NULL} to use the entire image.}
+ignore as background, or \code{NULL} to use the entire image. RGB range 0-1
+(not 0-255).}
 
 \item{target.color}{If an indicator image is created, the color with which to
-replace specified pixels. Can be either an RGB triplet or one of the
-colors listed by \code{\link[grDevices]{colors}}.}
+replace specified pixels. Can be either an RGB triplet or one of the colors
+listed by \code{\link[grDevices]{colors}}.}
 
 \item{plotting}{Logical. Should output be plotted in the plot window?}
 
-\item{save.indicator}{Logical OR path for saving indicator image. If TRUE,
-saves image to the same directory as the original image as
-'originalimagename_masked.png'; if a path is provided, saves it to that
-directory/name instead.}
+\item{save.indicator}{Logical. If TRUE, saves image to the same directory as
+the original image as 'originalimagename_masked.png'; if a path is
+provided, saves it to that directory/name instead, also as a PNG.}
 
 \item{dpi}{Resolution (dots per image) for saving indicator image.}
 

@@ -2,7 +2,7 @@
 
 #' Plot a 3D array as an RGB image
 #'
-#' Plots a 3D array as an RGB image in the plot window.
+#' Plots a 3D array as an sRGB image in the plot window.
 #'
 #' @param rgb.array 3D RGB array with R, G, and B channels (pixel rows x pixel
 #'   columns x color channels) to be plotted in the plot window as an actual

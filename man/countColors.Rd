@@ -23,22 +23,22 @@ details.}
 \code{center} to search. The same number of centers and radii must be
 specified.}
 
-\item{lower, upper}{RGB triplet(s) specifying the bounds of color space
-to search. Must be the same length. See details.}
+\item{lower, upper}{RGB triplet(s) specifying the bounds of color space to
+search. RGB range 0-1 (not 0-255). Must be the same length. See details.}
 
 \item{bg.lower, bg.upper}{RGB triplets specifying the bounds of color space to
-ignore as background, or \code{NULL} to use the entire image.}
+ignore as background, or \code{NULL} to use the entire image. RGB range 0-1
+(not 0-255).}
 
 \item{target.color}{If an indicator image is created, the color with which to
-replace specified pixels. Can be either an RGB triplet or one of the
-colors listed by \code{\link[grDevices]{colors}}.}
+replace specified pixels. Can be either an RGB triplet or one of the colors
+listed by \code{\link[grDevices]{colors}}.}
 
 \item{plotting}{Logical. Should output be plotted in the plot window?}
 
-\item{save.indicator}{Logical OR path for saving indicator image. If TRUE,
-saves image to the same directory as the original image as
-'originalimagename_masked.png'; if a path is provided, saves it to that
-directory/name instead.}
+\item{save.indicator}{Logical. If TRUE, saves image to the same directory as
+the original image as 'originalimagename_masked.png'; if a path is
+provided, saves it to that directory/name instead, also as a PNG.}
 
 \item{dpi}{Resolution (dots per image) for saving indicator image.}
 
@@ -46,21 +46,19 @@ directory/name instead.}
 targeted pixels changed to indicator color) be returned?}
 }
 \value{
-A list with the following attributes:
-\itemize{
-  \item \code{pixel.idx}: Unique coordinates of pixels within color range(s).
-  \item \code{pixel.fraction}: Proportion of the non-background image within
-  color range(s), found by dividing the number of pixels in \code{pixel.idx}
-  by the number of non-background pixels in the image.
-  \item \code{indicator.img}: If \code{return.indicator = TRUE}, RGB array with
-  color-swapped pixels.
-}
+A list with the following attributes: \itemize{ \item
+  \code{pixel.idx}: Unique coordinates of pixels within color range(s). \item
+  \code{pixel.fraction}: Proportion of the non-background image within color
+  range(s), found by dividing the number of pixels in \code{pixel.idx} by the
+  number of non-background pixels in the image. \item \code{indicator.img}:
+  If \code{return.indicator = TRUE}, RGB array with color-swapped pixels. }
 }
 \description{
 Counts the pixels within a color range; ranges can be spherical (see
 \code{\link{sphericalRange}}) or rectangular
 (\code{\link{rectangularRange}}). If multiple ranges are specified, each one
-is colored using a different indicator color.
+is colored using a different indicator color. Uses standard RGB (sRGB) color
+profile for display.
 }
 \details{
 More than one set of ranges can be specified for the color search
@@ -69,11 +67,12 @@ More than one set of ranges can be specified for the color search
   range, and the number of upper and lower bounds must be the same if using a
   rectangular one).
 
-For \code{center}, \code{upper}, and \code{lower}, which call for RGB
-triplets, provide either a vector of RGB triplets in RGB order, i.e. c(R1,
-G1, B1, R2, G2, B2, etc) or a 3-column matrix with one row per RGB triplet.
-If a vector is provided, it is coerced to a 3-column matrix, and must
-therefore be a multiple of 3.
+  For \code{center}, \code{upper}, and \code{lower}, which call for RGB
+  triplets, provide either a vector of RGB triplets in RGB order, i.e. c(R1,
+  G1, B1, R2, G2, B2, etc) or a 3-column matrix with one row per RGB triplet.
+  If a vector is provided, it is coerced to a 3-column matrix, and must
+  therefore be a multiple of 3. All RGB values are interpreted to be in sRGB
+  color space (not Adobe).
 }
 \examples{
 

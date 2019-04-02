@@ -52,13 +52,18 @@
 #' in the order R-G-B. For example, the upper bounds for white would be c(1, 1,
 #' 1), and the lower bounds might be c(0.8, 0.8, 0.8). This would search for all
 #' pixels where the red value, blue value, AND green value are all between 0.8
-#' and 1.
+#' and 1. All RGB values are interpreted to be in sRGB color space (not Adobe).
 #'
 #' @export
 rectangularRange <- function(pixel.array, upper, lower,
                              target.color = "green", main = "",
                              color.pixels = TRUE, plotting = TRUE) {
-
+  if (any(upper > 1) | any(lower > 1)) {
+    upper <- upper / 255
+    lower <- lower / 255
+    warning("Some values in upper or lower > 1;",
+            " assuming 0-255 range and converting to 0-1")
+  }
   # Find all pixels within target range + get their locations
   idx <- which( (lower[1] <= pixel.array[, , 1] &
                   pixel.array[, , 1] <= upper[1]) &
@@ -158,12 +163,19 @@ rectangularRange <- function(pixel.array, upper, lower,
 #' in the order R-G-B. For example, the upper bounds for white would be c(1, 1,
 #' 1), and the lower bounds might be c(0.8, 0.8, 0.8). This would search for all
 #' pixels where the red value, blue value, AND green value are all between 0.8
-#' and 1.
+#' and 1. All RGB values are interpreted to be in sRGB color space (not Adobe).
 #'
 #' @export
 sphericalRange <- function(pixel.array, center, radius,
                            target.color = "green", main = "",
                            color.pixels = TRUE, plotting = TRUE) {
+
+  # if center is not in 0-1 range, convert and throw a warning
+  if (any(center > 1)) {
+    center <- center / 255
+    warning("Some values in center > 1;",
+            " assuming 0-255 range and converting to 0-1")
+  }
 
   # Assuming RGB, change radius percent to fraction of maximum distance in RGB
   # space
