@@ -345,13 +345,6 @@ countColors <- function(path, color.range = "spherical",
     countcolors::plotArrayAsImage(indicator.img)
   }
 
-  # If destination specified (save.indicator was either TRUE or a path), save a
-  # comparison image with original and masked images
-  if (exists("destination")) {
-    png::writePNG(indicator.img, target = destination, dpi = dpi)
-    message(paste("Output image written to", destination))
-  }
-
   return.list <- list(pixel.idx = unique(idx),
                       pixel.fraction =
                         nrow(unique(idx)) / nrow(img$filtered.rgb.2d))
@@ -359,6 +352,15 @@ countColors <- function(path, color.range = "spherical",
   if (return.indicator) {
     return.list$indicator.img <- indicator.img
   }
+
+  # If destination specified (save.indicator was either TRUE or a path), save a
+  # comparison image with original and masked images
+  if (exists("destination")) {
+    png::writePNG(indicator.img, target = destination, dpi = dpi)
+    message(paste("Output image written to", destination))
+    return.list$output.path <- destination
+  }
+
 
   return(return.list)
 
@@ -451,7 +453,7 @@ countColorsInDirectory <- function(folder,
   }
 
   # Run the first one without suppressing messages to screen for color ranges
-  message(length(images), " images \n")
+  message(length(images), " images \nOutput of first image:")
   output[[1]] <-
     countcolors::countColors(images[1], color.range = color.range,
       center = center, radius = radius,
@@ -461,7 +463,7 @@ countColorsInDirectory <- function(folder,
       save.indicator = save.indicator[1], dpi = dpi,
       return.indicator = return.indicator)
 
-  message("\n Image: ", basename(images[1]))
+  message("\nImage: ", basename(images[1]))
 
   for (i in 2:length(images)) {
     message("Image: ", basename(images[i]))
@@ -476,6 +478,15 @@ countColorsInDirectory <- function(folder,
   }
 
   names(output) <- tools::file_path_sans_ext(basename(images))
+
+  if (!isFALSE(save.indicator)) {
+
+    # pull out the saved indicator image pathways
+    output_names <- lapply(output, function(i) dirname(i$output.path))
+    output_names <- unique(unlist(output_names))
+
+    message(paste0("Output images saved to:\n", paste(output_names, sep = "\n", collapse = "\n")))
+  }
 
   return(output)
 
