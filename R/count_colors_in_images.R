@@ -94,15 +94,37 @@ countColors <- function(path, color.range = "spherical",
     destination <- paste(tools::file_path_sans_ext(path),
                          "_masked.png", sep = "")
   } else if (is.character(save.indicator)) {
+    # two options:
+    # user provided a folder -> save as originalimage_masked.png
+    # user provided a full path and name -> just use that
+
     # If save.indicator is a filepath, save as a png and set save.indicator to a
     # logical value
+    img_sans_ext <- tools::file_path_sans_ext(path)
+    img_bare <- basename(img_sans_ext)
+
+    # if it's a folder, then dir.exists = TRUE
     if (dir.exists(save.indicator)) {
-      destination <- paste(save.indicator, tools::file_path_sans_ext(path),
-                           ".png", sep = "")
-    } else {
-      destination <- paste(tools::file_path_sans_ext(save.indicator),
-                           ".png", sep = "")
+      destination <- paste0(save.indicator, "/", img_bare,
+                           "_masked.png")
+    } else { # otherwise, do a couple of checks
+
+      # make sure it ends with .png
+      save_ext <- tools::file_ext(save.indicator)
+
+      # if it doesn't...
+      if (save_ext != "png") {
+
+        # store old name in a new variable
+        old_indicator <- save.indicator
+
+        # swap out original file extension with .png
+        new_indicator <- tools::file_path_sans_ext(save.indicator)
+        destination <- paste0("/", new_indicator, ".png")
+
+      }
     }
+
     save.indicator <- TRUE
   }
 
@@ -314,8 +336,7 @@ countColors <- function(path, color.range = "spherical",
 
 
 
-  }
-  else {
+  } else {
     stop("color.range must be either 'spherical' or 'rectangular'")
   }
 
@@ -388,6 +409,47 @@ countColorsInDirectory <- function(folder,
   # For each image, run countColors function and store the result
   output <- vector("list", length = length(images))
 
+  # If save.indicator is not false...
+  # three acceptable inputs:
+  # a single TRUE
+  # a single folder name
+  # filenames for each input image
+  # logical for each image
+  if (!isFALSE(save.indicator)) {
+
+    if (length(save.indicator) == 1) {
+      if (isTRUE(save.indicator)) {
+        # if it's just TRUE...
+
+        # make a vector of TRUEs so we can iterate
+        save.indicator <- rep(TRUE, length(images))
+
+      } else if (is.character(save.indicator)) {
+        # if it's a character, assume this is a folder name
+
+        # make directory if it doesn't currently exist
+        if (!dir.exists(save.indicator)) {
+
+          # lazy man's case handling: "at least i told you what i did"
+          message(paste("Creating", save.indicator, "folder"))
+          dir.create(save.indicator, recursive = TRUE)
+
+        }
+        # and just repeat it -- countColors will make the image names
+        save.indicator <- rep(save.indicator, length(images))
+      }
+    } else if (length(save.indicator) == length(images)) {
+
+      # make sure it's a type that countColors can interpret
+      if(!is.character(save.indicator) && !is.logical(save.indicator)) {
+        stop("save.indicator must be either a logical or a character vector (path)")
+      }
+    } else {
+      stop(paste("save.indicator must be length 1 or the same",
+                 "length as the number of input images"))
+    }
+  }
+
   # Run the first one without suppressing messages to screen for color ranges
   message(length(images), " images \n")
   output[[1]] <-
@@ -396,7 +458,7 @@ countColorsInDirectory <- function(folder,
       lower = lower, upper = upper,
       bg.lower = bg.lower, bg.upper = bg.upper,
       target.color = target.color, plotting = plotting,
-      save.indicator = save.indicator, dpi = dpi,
+      save.indicator = save.indicator[1], dpi = dpi,
       return.indicator = return.indicator)
 
   message("\n Image: ", basename(images[1]))
@@ -409,7 +471,7 @@ countColorsInDirectory <- function(folder,
                       lower = lower, upper = upper,
                       bg.lower = bg.lower, bg.upper = bg.upper,
                       target.color = target.color, plotting = plotting,
-                      save.indicator = save.indicator, dpi = dpi,
+                      save.indicator = save.indicator[i], dpi = dpi,
                       return.indicator = return.indicator))
   }
 
