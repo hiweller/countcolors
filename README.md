@@ -4,6 +4,9 @@
 **Email**: hannahiweller@gmail.com  
 **GitHub**: https://github.com/hiweller  
 
+![masked_bat](./inst/extdata/white_bg.png)  
+![masked_bat](./inst/extdata/white_bg_masked.png)
+
 An R package that counts colors within color range(s) in images, and
     provides a masked version of the image with targeted pixels
     changed to a different color. Output includes the locations
