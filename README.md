@@ -1,4 +1,5 @@
-**Version**: 0.9.1  
+[![Build Status](https://travis-ci.org/hiweller/countcolors.svg?branch=master)](https://travis-ci.org/hiweller/countcolors)  
+**Version**: 0.9.2  
 **Author**: Hannah Weller  
 **Email**: hannahiweller@gmail.com  
 **GitHub**: https://github.com/hiweller  
