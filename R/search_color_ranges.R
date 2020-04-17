@@ -83,11 +83,17 @@ rectangularRange <- function(pixel.array, upper, lower,
   # If color.pixels is TRUE, create a version of the image with the pixels
   # changed to a diagnostic color and add indicator image onto returned list
   if (color.pixels | plotting) {
-    indicator.img <-
-      countcolors::changePixelColor(pixel.array = pixel.array,
+
+    if (return.list$pixel.count != 0) {
+      indicator.img <-
+        countcolors::changePixelColor(pixel.array = pixel.array,
                                       pixel.idx = idx,
                                       target.color = target.color,
                                       plotting = FALSE, return.img = TRUE)
+    } else {
+      indicator.img <- pixel.array
+    }
+
     return.list$indicator.img <- indicator.img
 
     # If plotting = TRUE, plot indicator.img in the plot window
@@ -210,11 +216,16 @@ sphericalRange <- function(pixel.array, center, radius,
   # If color.pixels is TRUE, create a version of the image with the pixels
   # changed to a diagnostic color and add indicator image onto returned list
   if (color.pixels | plotting) {
-    indicator.img <-
-      countcolors::changePixelColor(pixel.array = pixel.array,
+    if (return.list$pixel.count != 0) {
+      indicator.img <-
+        countcolors::changePixelColor(pixel.array = pixel.array,
                                       pixel.idx = idx,
                                       target.color = target.color,
                                       plotting = FALSE, return.img = TRUE)
+    } else {
+      indicator.img <- pixel.array
+    }
+
     return.list$indicator.img <- indicator.img
 
     # If plotting = TRUE, plot indicator.img in the plot window
