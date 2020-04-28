@@ -65,17 +65,20 @@ rectangularRange <- function(pixel.array, upper, lower,
             " assuming 0-255 range and converting to 0-1")
   }
   # Find all pixels within target range + get their locations
-  idx <- which( (lower[1] <= pixel.array[, , 1] &
-                  pixel.array[, , 1] <= upper[1]) &
-                 (lower[2] <= pixel.array[, , 2] &
-                    pixel.array[, , 2] <= upper[2]) &
-                 (lower[3] <= pixel.array[, , 3] &
-                    pixel.array[, , 3] <= upper[3]),
-               arr.ind = TRUE)
+  idx.flat <- which( (lower[1] <= pixel.array[, , 1] &
+                        pixel.array[, , 1] <= upper[1]) &
+                       (lower[2] <= pixel.array[, , 2] &
+                          pixel.array[, , 2] <= upper[2]) &
+                       (lower[3] <= pixel.array[, , 3] &
+                          pixel.array[, , 3] <= upper[3]),
+                     arr.ind = FALSE)
+  idx <- arrayInd(idx.flat, dim(pixel.array[ , , 1]))
 
   # Create list to return, including index of pixels within range, number of
   # pixels in range, fraction of image in range, and original image
-  return.list <- list(pixel.idx = idx, pixel.count = nrow(idx),
+  return.list <- list(pixel.idx = idx,
+                      pixel.idx.flat = idx.flat,
+                      pixel.count = nrow(idx),
                       img.fraction =
                         nrow(idx) / (nrow(pixel.array) * ncol(pixel.array)),
                       original.img = pixel.array)
@@ -198,7 +201,8 @@ sphericalRange <- function(pixel.array, center, radius,
   }
 
   # Index every pixel with distance <= radius
-  idx <- which(pixel.distances <= radius, arr.ind = TRUE)
+  idx.flat <- which(pixel.distances <= radius, arr.ind = FALSE)
+  idx <- arrayInd(idx, dim(pixel.distances))
 
   # Provide warning if no pixels were indexed at all
   if (nrow(idx) == 0) {
@@ -208,6 +212,7 @@ sphericalRange <- function(pixel.array, center, radius,
   # Create list to return, including index of pixels within range, number of
   # pixels in range, fraction of image in range, and original image
   return.list <- list(pixel.idx = idx,
+                      pixel.idx.flat = idx.flat,
                       pixel.count = nrow(idx),
                       img.fraction = nrow(idx) /
                         (nrow(pixel.array) * ncol(pixel.array)),

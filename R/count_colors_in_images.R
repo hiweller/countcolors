@@ -220,6 +220,7 @@ countColors <- function(path, color.range = "spherical",
                                    color.pixels = get.indicator,
                                    target.color = target.color[1])
     idx <- filtered.img$pixel.idx
+    idx.flat <- filtered.img$pixel.idx.flat
 
     # Keep the indicator image (color inside pixel range changed to indicator
     # color) and pixel indices for later display
@@ -243,6 +244,7 @@ countColors <- function(path, color.range = "spherical",
                                             return.img = TRUE, plotting = FALSE)
         }
         idx <- rbind(idx, filtered.img$pixel.idx)
+        idx.flat <- c(idx.flat, filtered.img$pixel.idx.flat)
       }
     }
 
@@ -312,6 +314,7 @@ countColors <- function(path, color.range = "spherical",
                                      color.pixels = get.indicator,
                                      target.color = target.color[1])
     idx <- filtered.img$pixel.idx
+    idx.flat <- filtered.img$pixel.idx.flat
 
     if (get.indicator) {
       indicator.img <- filtered.img$indicator.img
@@ -331,6 +334,7 @@ countColors <- function(path, color.range = "spherical",
                                             return.img = TRUE, plotting = FALSE)
         }
         idx <- rbind(idx, filtered.img$pixel.idx)
+        idx.flat <- c(idx.flat, filtered.img$pixel.idx.flat)
       }
     }
 
@@ -346,6 +350,7 @@ countColors <- function(path, color.range = "spherical",
   }
 
   return.list <- list(pixel.idx = unique(idx),
+                      pixel.idx.flat = unique(idx.flat),
                       pixel.fraction =
                         nrow(unique(idx)) / nrow(img$filtered.rgb.2d))
 
